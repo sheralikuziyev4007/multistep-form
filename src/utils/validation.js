@@ -31,7 +31,6 @@ export function validateStep1(data) {
 export function validateStep2(data) {
   const errors = {};
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  const phoneRegex = /^\+?[0-9][0-9\s\-()]{8,}$/;
 
   if (!data.email) {
     errors.email = "Укажите email";
@@ -41,8 +40,9 @@ export function validateStep2(data) {
 
   if (!data.phone) {
     errors.phone = "Укажите номер телефона";
-  } else if (!phoneRegex.test(data.phone)) {
-    errors.phone = "Неверный формат телефона";
+  } else {
+    const phoneError = validatePhone(data.phone);
+    if (phoneError) errors.phone = phoneError;
   }
 
   if (!data.city || data.city.trim().length < 2) {
@@ -50,6 +50,23 @@ export function validateStep2(data) {
   }
 
   return errors;
+}
+
+// Проверка телефона по стандарту E.164: «+», код страны, не более 15 цифр.
+// Для Узбекистана (+998) дополнительно требуется ровно 9 цифр после кода.
+export function validatePhone(value) {
+  const phone = value.trim();
+  if (!/^\+[0-9\s\-()]+$/.test(phone)) {
+    return "Номер должен начинаться с «+» и содержать только цифры";
+  }
+  const digits = phone.replace(/\D/g, "");
+  if (digits.startsWith("998")) {
+    return digits.length === 12 ? "" : "Узбекский номер: +998 и 9 цифр";
+  }
+  if (digits.length < 8 || digits.length > 15) {
+    return "Номер должен содержать от 8 до 15 цифр";
+  }
+  return "";
 }
 
 export function getPasswordStrength(password) {

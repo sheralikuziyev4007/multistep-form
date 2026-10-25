@@ -1,3 +1,19 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* Тёмная тема: переопределяем базовые светлые цвета, чтобы не трогать каждый компонент */
+.dark .bg-white { background-color: rgb(15 23 42 / 0.6); }
+.dark .bg-slate-50,
+.dark .hover\:bg-slate-50:hover { background-color: rgb(30 41 59 / 0.6); }
+.dark .bg-slate-200 { background-color: #334155; }
+.dark .bg-teal-50 { background-color: rgb(19 78 74 / 0.4); }
+.dark .border-slate-200 { border-color: #334155; }
+.dark .border-slate-300 { border-color: #475569; }
+.dark .text-slate-800,
+.dark .text-slate-700 { color: #f1f5f9; }
+.dark .text-slate-600 { color: #cbd5e1; }
+.dark .text-slate-500 { color: #94a3b8; }
+.dark .text-teal-700 { color: #5eead4; }
+.dark input { background-color: rgb(30 41 59 / 0.7); color: #f1f5f9; }
+.dark input::placeholder { color: #64748b; }

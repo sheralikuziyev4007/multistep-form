@@ -19,6 +19,7 @@ export function StepContactInfo({ formData, errors, updateFields }) {
         value={formData.phone}
         error={errors.phone}
         placeholder="+998 90 123 45 67"
+        maxLength={20}
         onChange={(e) => updateFields({ phone: e.target.value })}
       />
       <TextField
