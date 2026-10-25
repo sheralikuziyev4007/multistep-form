@@ -1,8 +1,10 @@
 // utils/validation.js — валидация по шагам
 
+import { parseDate } from "./date";
+
 export function calculateAge(birthDateStr) {
-  if (!birthDateStr) return 0;
-  const birthDate = new Date(birthDateStr);
+  const birthDate = parseDate(birthDateStr); // формат дд/мм/гггг
+  if (!birthDate) return 0;
   const today = new Date();
   let age = today.getFullYear() - birthDate.getFullYear();
   const m = today.getMonth() - birthDate.getMonth();
@@ -22,6 +24,12 @@ export function validateStep1(data) {
   }
   if (!data.birthDate) {
     errors.birthDate = "Укажите дату рождения";
+  } else if (!parseDate(data.birthDate)) {
+    errors.birthDate = "Введите существующую дату в формате дд/мм/гггг";
+  } else if (parseDate(data.birthDate) > new Date()) {
+    errors.birthDate = "Дата рождения не может быть в будущем";
+  } else if (parseDate(data.birthDate).getFullYear() < 1900) {
+    errors.birthDate = "Укажите корректный год рождения";
   } else if (calculateAge(data.birthDate) < 18) {
     errors.birthDate = "Регистрация доступна только с 18 лет";
   }

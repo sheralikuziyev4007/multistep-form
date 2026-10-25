@@ -12,6 +12,10 @@ export function StepAccountInfo({ formData, errors, updateFields }) {
         value={formData.login}
         error={errors.login}
         placeholder="alisher_k"
+        autoComplete="username"
+        autoCapitalize="none"
+        autoCorrect="off"
+        spellCheck={false}
         onChange={(e) => updateFields({ login: e.target.value })}
       />
       <div>
